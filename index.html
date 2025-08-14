@@ -1,16 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Spinning 3D Fish</title>
-<style>
-  body { margin:0; overflow:hidden; }
-  canvas { display:block; }
-</style>
+  <meta charset="UTF-8">
+  <title>Custom Spinning Text</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #222;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      overflow: hidden; /* needed for absolute ads */
+    }
+
+    .container {
+      text-align: center;
+      z-index: 1; /* keep form above ads */
+    }
+
+    input[type="text"] {
+      padding: 0.5rem;
+      font-size: 1rem;
+      width: 250px;
+      border: none;
+      border-radius: 4px;
+      margin-right: 0.5rem;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 4px;
+      background-color: #4caf50;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    /* Container for dynamically created ads */
+    #ads-container {
+      position: absolute;
+      inset: 0;
+      pointer-events: none; /* allow clicks to pass through except on ads themselves */
+    }
+
+    .ad-iframe {
+      position: absolute;
+      width: 300px;
+      height: 250px;
+      border: none;
+      pointer-events: auto; /* re‑enable interaction for the iframe */
+    }
+
+    /* Footer styling */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      color: #fff;
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 0.5rem 0;
+      z-index: 20;
+    }
+
+    footer a {
+      color: #ffeb3b;
+      margin: 0 0.5rem;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.152.0/examples/js/loaders/GLTFLoader.js"></script>
-<script src="main.js"></script>
+  <div class="container">
+    <h1>Enter Your Text</h1>
+    <form action="spinning.html" method="GET">
+      <input type="text" name="text" placeholder="Your text here" required />
+      <button type="submit">Spin It!</button>
+    </form>
+  </div>
+
+  <!-- Dynamic ads will be injected here -->
+  <div id="ads-container"></div>
+
+  <footer>
+    © 2024 Totally Legit Corp. All rights reserved. <br>
+    <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Privacy Policy</a> | <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Terms of Service</a> | <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Cookie Settings</a> |
+    Share: <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">🐦</a><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">👍</a><a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">📢</a>
+    <br>
+    <em>Disclaimer: This site is not responsible for any spontaneous laughter, code bugs, or existential crises caused by the above content.</em>
+  </footer>
+
+  <script>
+    // Configuration
+    const AD_INTERVAL_MS = 15000; // new ad every 15 seconds
+    const AD_WIDTH = 300;
+    const AD_HEIGHT = 250;
+
+    const adsContainer = document.getElementById('ads-container');
+
+    function createAd() {
+      const iframe = document.createElement('iframe');
+      iframe.src = 'ad.html';
+      iframe.className = 'ad-iframe';
+      // Random position within viewport, ensuring the ad stays fully visible
+      const maxLeft = window.innerWidth - AD_WIDTH;
+      const maxTop = window.innerHeight - AD_HEIGHT;
+      const left = Math.random() * maxLeft;
+      const top = Math.random() * maxTop;
+      iframe.style.left = `${left}px`;
+      iframe.style.top = `${top}px`;
+      adsContainer.appendChild(iframe);
+    }
+
+    // Initial ad
+    createAd();
+    // Subsequent ads
+    setInterval(createAd, AD_INTERVAL_MS);
+  </script>
 </body>
 </html>
