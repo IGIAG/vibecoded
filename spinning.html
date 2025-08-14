@@ -14,11 +14,23 @@
       align-items: center;
       background-color: #111;
       perspective: 800px; /* Enable 3D perspective */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* Dark overlay to keep text readable over bright gifs */
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.4);
+      pointer-events: none;
     }
 
     /* Wrapper that handles the up‑and‑down bobbing */
     .bob {
       animation: bob 2s ease-in-out infinite;
+      position: relative; /* for overlay stacking */
     }
 
     .spinner {
@@ -27,6 +39,7 @@
       color: #fff;
       animation: spinY 5s linear infinite;
       transform-style: preserve-3d;
+      z-index: 1;
     }
 
     @keyframes spinY {
@@ -51,19 +64,63 @@
 <body>
   <div class="bob">
     <div class="spinner">fih.</div>
+    <div class="overlay"></div>
   </div>
 
   <script>
-    // Read the "text" query parameter and replace the spinner content if present.
+    // Helper to fetch a random GIF from Tenor based on a query.
+    async function setBackgroundGif(searchTerm) {
+      const apiKey = 'LIVDSRZULELA'; // Public demo key from Tenor
+      const limit = 20;
+      const url = `https://g.tenor.com/v1/search?q=${encodeURIComponent(searchTerm)}&key=${apiKey}&limit=${limit}`;
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Network response was not ok');
+        const data = await response.json();
+
+        if (!data.results || data.results.length === 0) {
+          console.warn('No GIFs found for query:', searchTerm);
+          return;
+        }
+
+        // Pick a random result
+        const randomIndex = Math.floor(Math.random() * data.results.length);
+        const gif = data.results[randomIndex];
+
+        // Prefer mediumgif, fallback to gif
+        const media = gif.media[0];
+        const gifUrl = (media && media.mediumgif && media.mediumgif.url) ||
+                       (media && media.gif && media.gif.url) ||
+                       null;
+
+        if (gifUrl) {
+          document.body.style.backgroundImage = `url("${gifUrl}")`;
+        }
+      } catch (err) {
+        console.error('Failed to fetch GIF:', err);
+      }
+    }
+
     (function() {
       const params = new URLSearchParams(window.location.search);
       const customText = params.get('text');
+
+      // Update spinner text if provided
       if (customText !== null) {
         const spinner = document.querySelector('.spinner');
         if (spinner) {
-          // Decode URI component and set the text
           spinner.textContent = decodeURIComponent(customText);
         }
+      }
+
+      // Build the search term: user text + "shitpost"
+      const baseTerm = customText ? decodeURIComponent(customText) : '';
+      const searchTerm = `${baseTerm} shitpost`.trim();
+
+      // Only attempt to fetch a GIF if we have something to search for
+      if (searchTerm) {
+        setBackgroundGif(searchTerm);
       }
     })();
   </script>
