@@ -10,10 +10,11 @@
       background: #ff0;
       font-family: Impact, Arial, sans-serif;
       overflow: hidden;
+      position: relative;
     }
     .ad-container {
       width: 100%;
-      height: 100vh;
+      height: 100%;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -68,14 +69,38 @@
       50% { transform: scale(1.1); }
       100% { transform: scale(1); }
     }
+    /* Close button */
+    .close-btn {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: #000;
+      color: #fff;
+      border: none;
+      font-size: 1rem;
+      padding: 2px 6px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
+  <button class="close-btn">✖</button>
   <div class="ad-container flash">
     <div class="marquee"><span class="blink">⚡️⚡️⚡️ LIMITED TIME OFFER! GET 99% OFF EVERYTHING! ⚡️⚡️⚡️</span></div>
     <h1 class="blink">BUY THE AMAZING "SUPER ULTRA PRODUCT" NOW!!!</h1>
     <p class="blink">It does EVERYTHING! It solves ALL your problems! <strong>FREE SHIPPING</strong> for the next 5 minutes!</p>
     <button class="button">CLICK HERE OR ELSE!</button>
   </div>
+
+  <script>
+    // Close button hides the iframe that contains this ad
+    const closeBtn = document.querySelector('.close-btn');
+    closeBtn.addEventListener('click', () => {
+      const iframe = window.frameElement;
+      if (iframe) {
+        iframe.style.display = 'none';
+      }
+    });
+  </script>
 </body>
 </html>

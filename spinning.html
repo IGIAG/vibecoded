@@ -64,13 +64,19 @@
       }
     }
 
-    /* Ad iframe styling */
-    .ad-frame {
-      width: 100%;
-      height: 150px;
+    /* Container for dynamic ads */
+    #ads-container {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .ad-iframe {
+      position: absolute;
+      width: 300px;
+      height: 250px;
       border: none;
-      margin-top: 10px;
-      z-index: 2;
+      pointer-events: auto;
     }
   </style>
 </head>
@@ -80,8 +86,35 @@
   </div>
   <div class="bg-overlay"></div>
 
-  <!-- Obnoxious ad -->
-  <iframe src="ad.html" class="ad-frame" scrolling="no"></iframe>
+  <!-- Dynamic ads will be injected here -->
+  <div id="ads-container"></div>
+
+  <script>
+    // Configuration for ad spawning
+    const AD_INTERVAL_MS = 15000; // every 15 seconds
+    const AD_WIDTH = 300;
+    const AD_HEIGHT = 250;
+
+    const adsContainer = document.getElementById('ads-container');
+
+    function createAd() {
+      const iframe = document.createElement('iframe');
+      iframe.src = 'ad.html';
+      iframe.className = 'ad-iframe';
+      const maxLeft = window.innerWidth - AD_WIDTH;
+      const maxTop = window.innerHeight - AD_HEIGHT;
+      const left = Math.random() * maxLeft;
+      const top = Math.random() * maxTop;
+      iframe.style.left = `${left}px`;
+      iframe.style.top = `${top}px`;
+      adsContainer.appendChild(iframe);
+    }
+
+    // Initial ad
+    createAd();
+    // Subsequent ads
+    setInterval(createAd, AD_INTERVAL_MS);
+  </script>
 
   <script>
     // Helper to fetch a random GIF from Tenor based on a query.

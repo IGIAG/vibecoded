@@ -15,10 +15,12 @@
       background-color: #222;
       color: #fff;
       font-family: Arial, sans-serif;
+      overflow: hidden; /* needed for absolute ads */
     }
 
     .container {
       text-align: center;
+      z-index: 1; /* keep form above ads */
     }
 
     input[type="text"] {
@@ -44,12 +46,19 @@
       background-color: #45a049;
     }
 
-    /* Make the ad iframe fill the width but stay short */
-    .ad-frame {
-      width: 100%;
-      height: 200px;
+    /* Container for dynamically created ads */
+    #ads-container {
+      position: absolute;
+      inset: 0;
+      pointer-events: none; /* allow clicks to pass through except on ads themselves */
+    }
+
+    .ad-iframe {
+      position: absolute;
+      width: 300px;
+      height: 250px;
       border: none;
-      margin-top: 20px;
+      pointer-events: auto; /* re‑enable interaction for the iframe */
     }
   </style>
 </head>
@@ -62,7 +71,35 @@
     </form>
   </div>
 
-  <!-- Obnoxious ad -->
-  <iframe src="ad.html" class="ad-frame" scrolling="no"></iframe>
+  <!-- Dynamic ads will be injected here -->
+  <div id="ads-container"></div>
+
+  <script>
+    // Configuration
+    const AD_INTERVAL_MS = 15000; // new ad every 15 seconds
+    const AD_WIDTH = 300;
+    const AD_HEIGHT = 250;
+
+    const adsContainer = document.getElementById('ads-container');
+
+    function createAd() {
+      const iframe = document.createElement('iframe');
+      iframe.src = 'ad.html';
+      iframe.className = 'ad-iframe';
+      // Random position within viewport, ensuring the ad stays fully visible
+      const maxLeft = window.innerWidth - AD_WIDTH;
+      const maxTop = window.innerHeight - AD_HEIGHT;
+      const left = Math.random() * maxLeft;
+      const top = Math.random() * maxTop;
+      iframe.style.left = `${left}px`;
+      iframe.style.top = `${top}px`;
+      adsContainer.appendChild(iframe);
+    }
+
+    // Initial ad
+    createAd();
+    // Subsequent ads
+    setInterval(createAd, AD_INTERVAL_MS);
+  </script>
 </body>
 </html>
