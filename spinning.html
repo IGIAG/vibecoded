@@ -19,18 +19,20 @@
       background-repeat: no-repeat;
     }
 
-    /* Dark overlay to keep text readable over bright gifs */
-    .overlay {
-      position: absolute;
+    /* Dark overlay that covers the whole viewport */
+    .bg-overlay {
+      position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.5); /* darker background */
       pointer-events: none;
+      z-index: 0;
     }
 
     /* Wrapper that handles the up‑and‑down bobbing */
     .bob {
       animation: bob 2s ease-in-out infinite;
-      position: relative; /* for overlay stacking */
+      position: relative; /* for proper stacking */
+      z-index: 1;
     }
 
     .spinner {
@@ -39,7 +41,6 @@
       color: #fff;
       animation: spinY 5s linear infinite;
       transform-style: preserve-3d;
-      z-index: 1;
     }
 
     @keyframes spinY {
@@ -64,8 +65,8 @@
 <body>
   <div class="bob">
     <div class="spinner">fih.</div>
-    <div class="overlay"></div>
   </div>
+  <div class="bg-overlay"></div>
 
   <script>
     // Helper to fetch a random GIF from Tenor based on a query.
