@@ -7,11 +7,22 @@
     body {
       margin: 0;
       padding: 0;
-      background: #ff0;
+      /* The background image will be set dynamically via script */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       font-family: Impact, Arial, sans-serif;
       overflow: hidden;
       position: relative;
+      /* Rainbow hue‑rotate filter that continuously cycles */
+      animation: hueCycle 5s linear infinite;
     }
+
+    @keyframes hueCycle {
+      from { filter: hue-rotate(0deg); }
+      to   { filter: hue-rotate(360deg); }
+    }
+
     .ad-container {
       width: 100%;
       height: 100%;
@@ -21,16 +32,10 @@
       align-items: center;
       color: #fff;
       text-shadow: 2px 2px 0 #000;
-    }
-    .blink {
-      animation: blink 0.8s steps(2, start) infinite;
-    }
-    @keyframes blink {
-      to { visibility: hidden; }
-    }
-    .flash {
+      /* Keep the flashing background‑color effect on top of the gif */
       animation: flash 1s linear infinite;
     }
+
     @keyframes flash {
       0%   { background-color: #ff0000; }
       25%  { background-color: #00ff00; }
@@ -38,21 +43,33 @@
       75%  { background-color: #ffff00; }
       100% { background-color: #ff00ff; }
     }
+
     .marquee {
       width: 100%;
       overflow: hidden;
       white-space: nowrap;
       box-sizing: border-box;
     }
+
     .marquee span {
       display: inline-block;
       padding-left: 100%;
       animation: marquee 15s linear infinite;
     }
+
     @keyframes marquee {
       0%   { transform: translate(0, 0); }
       100% { transform: translate(-100%, 0); }
     }
+
+    .blink {
+      animation: blink 0.8s steps(2, start) infinite;
+    }
+
+    @keyframes blink {
+      to { visibility: hidden; }
+    }
+
     .button {
       margin-top: 20px;
       padding: 15px 30px;
@@ -64,11 +81,13 @@
       text-transform: uppercase;
       animation: pulse 1s infinite;
     }
+
     @keyframes pulse {
       0% { transform: scale(1); }
       50% { transform: scale(1.1); }
       100% { transform: scale(1); }
     }
+
     /* Close button */
     .close-btn {
       position: absolute;
@@ -87,10 +106,10 @@
 <body>
   <button class="close-btn">✖</button>
   <div class="ad-container flash">
-    <div class="marquee"><span class="blink">⚡️⚡️⚡️ LIMITED TIME OFFER! GET 99% OFF EVERYTHING! ⚡️⚡️⚡️</span></div>
-    <h1 class="blink">BUY THE AMAZING "SUPER ULTRA PRODUCT" NOW!!!</h1>
-    <p class="blink">It does EVERYTHING! It solves ALL your problems! <strong>FREE SHIPPING</strong> for the next 5 minutes!</p>
-    <button class="button">CLICK HERE OR ELSE!</button>
+    <div class="marquee"><span class="blink">🔥 Hot code paths in your area! 🔥</span></div>
+    <h1 class="blink">FREE DEBUG SESSION – CLAIM NOW!</h1>
+    <p class="blink">Your code is screaming? Get a complimentary debug session and squash those bugs! <strong>LIMITED TIME</strong> offer.</p>
+    <button class="button">CLICK HERE TO DEBUG!</button>
   </div>
 
   <script>
@@ -102,6 +121,44 @@
         iframe.style.display = 'none';
       }
     });
+  </script>
+
+  <script>
+    // Fetch a random "shitpost" GIF from Tenor and set it as the page background
+    async function setAdBackground() {
+      const apiKey = 'LIVDSRZULELA'; // Public demo key
+      const query = 'shitpost';
+      const limit = 20;
+      const url = `https://g.tenor.com/v1/search?q=${encodeURIComponent(query)}&key=${apiKey}&limit=${limit}`;
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Network response was not ok');
+        const data = await response.json();
+
+        if (!data.results || data.results.length === 0) {
+          console.warn('No GIFs found for query:', query);
+          return;
+        }
+
+        // Pick a random GIF from the results
+        const randomIndex = Math.floor(Math.random() * data.results.length);
+        const gif = data.results[randomIndex];
+        const media = gif.media[0];
+        const gifUrl = (media && media.mediumgif && media.mediumgif.url) ||
+                       (media && media.gif && media.gif.url) ||
+                       null;
+
+        if (gifUrl) {
+          document.body.style.backgroundImage = `url("${gifUrl}")`;
+        }
+      } catch (err) {
+        console.error('Failed to fetch GIF:', err);
+      }
+    }
+
+    // Run on load
+    setAdBackground();
   </script>
 </body>
 </html>
