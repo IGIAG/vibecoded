@@ -80,6 +80,30 @@
       pointer-events: auto;
       z-index: 10; /* ensure iframe itself is on top */
     }
+
+    /* Footer styling */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      color: #fff;
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 0.5rem 0;
+      z-index: 20;
+    }
+
+    footer a {
+      color: #ffeb3b;
+      margin: 0 0.5rem;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -90,6 +114,14 @@
 
   <!-- Dynamic ads will be injected here -->
   <div id="ads-container"></div>
+
+  <footer>
+    © 2024 Absolutely Real Corp. All rights reserved. <br>
+    <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">Cookie Settings</a> |
+    Share: <a href="#">🐦</a><a href="#">👍</a><a href="#">📢</a>
+    <br>
+    <em>Legal Disclaimer: By using this site you agree to never take anything seriously, especially not the ads.</em>
+  </footer>
 
   <script>
     // Configuration for ad spawning

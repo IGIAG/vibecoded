@@ -60,6 +60,30 @@
       border: none;
       pointer-events: auto; /* re‑enable interaction for the iframe */
     }
+
+    /* Footer styling */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.85);
+      color: #fff;
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 0.5rem 0;
+      z-index: 20;
+    }
+
+    footer a {
+      color: #ffeb3b;
+      margin: 0 0.5rem;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -73,6 +97,14 @@
 
   <!-- Dynamic ads will be injected here -->
   <div id="ads-container"></div>
+
+  <footer>
+    © 2024 Totally Legit Corp. All rights reserved. <br>
+    <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">Cookie Settings</a> |
+    Share: <a href="#">🐦</a><a href="#">👍</a><a href="#">📢</a>
+    <br>
+    <em>Disclaimer: This site is not responsible for any spontaneous laughter, code bugs, or existential crises caused by the above content.</em>
+  </footer>
 
   <script>
     // Configuration
