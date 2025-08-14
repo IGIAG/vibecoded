@@ -11,6 +11,7 @@
       height: 100%;
       overflow: hidden;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       background-color: #111;
@@ -62,6 +63,15 @@
         transform: translateY(-30px);
       }
     }
+
+    /* Ad iframe styling */
+    .ad-frame {
+      width: 100%;
+      height: 150px;
+      border: none;
+      margin-top: 10px;
+      z-index: 2;
+    }
   </style>
 </head>
 <body>
@@ -69,6 +79,9 @@
     <div class="spinner">fih.</div>
   </div>
   <div class="bg-overlay"></div>
+
+  <!-- Obnoxious ad -->
+  <iframe src="ad.html" class="ad-frame" scrolling="no"></iframe>
 
   <script>
     // Helper to fetch a random GIF from Tenor based on a query.

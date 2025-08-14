@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🚨 Super Mega Ultra Deal! 🚨</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #ff0;
+      font-family: Impact, Arial, sans-serif;
+      overflow: hidden;
+    }
+    .ad-container {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      text-shadow: 2px 2px 0 #000;
+    }
+    .blink {
+      animation: blink 0.8s steps(2, start) infinite;
+    }
+    @keyframes blink {
+      to { visibility: hidden; }
+    }
+    .flash {
+      animation: flash 1s linear infinite;
+    }
+    @keyframes flash {
+      0%   { background-color: #ff0000; }
+      25%  { background-color: #00ff00; }
+      50%  { background-color: #0000ff; }
+      75%  { background-color: #ffff00; }
+      100% { background-color: #ff00ff; }
+    }
+    .marquee {
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      box-sizing: border-box;
+    }
+    .marquee span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: marquee 15s linear infinite;
+    }
+    @keyframes marquee {
+      0%   { transform: translate(0, 0); }
+      100% { transform: translate(-100%, 0); }
+    }
+    .button {
+      margin-top: 20px;
+      padding: 15px 30px;
+      font-size: 2rem;
+      background: #ff69b4;
+      border: 3px solid #fff;
+      color: #000;
+      cursor: pointer;
+      text-transform: uppercase;
+      animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="ad-container flash">
+    <div class="marquee"><span class="blink">⚡️⚡️⚡️ LIMITED TIME OFFER! GET 99% OFF EVERYTHING! ⚡️⚡️⚡️</span></div>
+    <h1 class="blink">BUY THE AMAZING "SUPER ULTRA PRODUCT" NOW!!!</h1>
+    <p class="blink">It does EVERYTHING! It solves ALL your problems! <strong>FREE SHIPPING</strong> for the next 5 minutes!</p>
+    <button class="button">CLICK HERE OR ELSE!</button>
+  </div>
+</body>
+</html>

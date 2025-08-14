@@ -9,6 +9,7 @@
       padding: 0;
       height: 100%;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       background-color: #222;
@@ -42,6 +43,14 @@
     button:hover {
       background-color: #45a049;
     }
+
+    /* Make the ad iframe fill the width but stay short */
+    .ad-frame {
+      width: 100%;
+      height: 200px;
+      border: none;
+      margin-top: 20px;
+    }
   </style>
 </head>
 <body>
@@ -52,5 +61,8 @@
       <button type="submit">Spin It!</button>
     </form>
   </div>
+
+  <!-- Obnoxious ad -->
+  <iframe src="ad.html" class="ad-frame" scrolling="no"></iframe>
 </body>
 </html>
