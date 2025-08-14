@@ -7,10 +7,6 @@
     body {
       margin: 0;
       padding: 0;
-      /* The background image will be set dynamically via script */
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
       font-family: Impact, Arial, sans-serif;
       overflow: hidden;
       position: relative;
@@ -32,16 +28,10 @@
       align-items: center;
       color: #fff;
       text-shadow: 2px 2px 0 #000;
-      /* Keep the flashing background‑color effect on top of the gif */
-      animation: flash 1s linear infinite;
-    }
-
-    @keyframes flash {
-      0%   { background-color: #ff0000; }
-      25%  { background-color: #00ff00; }
-      50%  { background-color: #0000ff; }
-      75%  { background-color: #ffff00; }
-      100% { background-color: #ff00ff; }
+      /* Semi‑transparent dark overlay so text stays readable */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* No solid background‑color animation – we want the GIF to show */
+      position: relative;
     }
 
     .marquee {
@@ -105,7 +95,7 @@
 </head>
 <body>
   <button class="close-btn">✖</button>
-  <div class="ad-container flash">
+  <div class="ad-container">
     <div class="marquee"><span class="blink">🔥 Hot code paths in your area! 🔥</span></div>
     <h1 class="blink">FREE DEBUG SESSION – CLAIM NOW!</h1>
     <p class="blink">Your code is screaming? Get a complimentary debug session and squash those bugs! <strong>LIMITED TIME</strong> offer.</p>
@@ -124,7 +114,7 @@
   </script>
 
   <script>
-    // Fetch a random "shitpost" GIF from Tenor and set it as the page background
+    // Fetch a random "shitpost" GIF from Tenor and set it as the ad background
     async function setAdBackground() {
       const apiKey = 'LIVDSRZULELA'; // Public demo key
       const query = 'shitpost';
@@ -150,7 +140,11 @@
                        null;
 
         if (gifUrl) {
-          document.body.style.backgroundImage = `url("${gifUrl}")`;
+          const container = document.querySelector('.ad-container');
+          container.style.backgroundImage = `url("${gifUrl}")`;
+          container.style.backgroundSize = 'cover';
+          container.style.backgroundPosition = 'center';
+          container.style.backgroundRepeat = 'no-repeat';
         }
       } catch (err) {
         console.error('Failed to fetch GIF:', err);
