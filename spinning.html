@@ -16,6 +16,11 @@
       perspective: 800px; /* Enable 3D perspective */
     }
 
+    /* Wrapper that handles the up‑and‑down bobbing */
+    .bob {
+      animation: bob 2s ease-in-out infinite;
+    }
+
     .spinner {
       font-size: 15vw;          /* Huge text, responsive */
       font-weight: bold;
@@ -32,9 +37,20 @@
         transform: rotateY(360deg);
       }
     }
+
+    @keyframes bob {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-30px);
+      }
+    }
   </style>
 </head>
 <body>
-  <div class="spinner">fih.</div>
+  <div class="bob">
+    <div class="spinner">fih.</div>
+  </div>
 </body>
 </html>
