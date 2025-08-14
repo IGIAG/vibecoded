@@ -52,5 +52,20 @@
   <div class="bob">
     <div class="spinner">fih.</div>
   </div>
+
+  <script>
+    // Read the "text" query parameter and replace the spinner content if present.
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const customText = params.get('text');
+      if (customText !== null) {
+        const spinner = document.querySelector('.spinner');
+        if (spinner) {
+          // Decode URI component and set the text
+          spinner.textContent = decodeURIComponent(customText);
+        }
+      }
+    })();
+  </script>
 </body>
 </html>
