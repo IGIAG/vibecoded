@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Spinning Text</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #111;
+      perspective: 800px; /* Enable 3D perspective */
+    }
+
+    .spinner {
+      font-size: 15vw;          /* Huge text, responsive */
+      font-weight: bold;
+      color: #fff;
+      animation: spinY 5s linear infinite;
+      transform-style: preserve-3d;
+    }
+
+    @keyframes spinY {
+      from {
+        transform: rotateY(0deg);
+      }
+      to {
+        transform: rotateY(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="spinner">fih.</div>
+</body>
+</html>
